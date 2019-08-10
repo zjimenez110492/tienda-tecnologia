@@ -29,6 +29,8 @@ public class RepositorioGarantiaPersistente implements RepositorioGarantiaExtend
 
 	@Override
 	public void agregar(GarantiaExtendida garantia) {
+		System.out.println("Entrando a RepositorioGarantiaPersistente-agregar.    ");
+		
 		GarantiaExtendidaEntity garantiaEntity = buildGarantiaExtendidaEntity(garantia);
 		entityManager.persist(garantiaEntity);
 		
@@ -36,9 +38,9 @@ public class RepositorioGarantiaPersistente implements RepositorioGarantiaExtend
 	
 	@Override
 	public Producto obtenerProductoConGarantiaPorCodigo(String codigo) {
-		
+
 		GarantiaExtendidaEntity garantiaEntity = obtenerGarantiaEntityPorCodigo(codigo);
-		return ProductoBuilder.convertirADominio(garantiaEntity != null ? garantiaEntity.getProducto() : null);
+				return ProductoBuilder.convertirADominio(garantiaEntity != null ? garantiaEntity.getProducto() : null);
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -48,7 +50,6 @@ public class RepositorioGarantiaPersistente implements RepositorioGarantiaExtend
 		query.setParameter(CODIGO, codigo);
 
 		List resultList = query.getResultList();
-
 		return !resultList.isEmpty() ? (GarantiaExtendidaEntity) resultList.get(0) : null;
 	}
 
@@ -66,7 +67,6 @@ public class RepositorioGarantiaPersistente implements RepositorioGarantiaExtend
 	
 	@Override
 	public GarantiaExtendida obtener(String codigo) {
-		
 		GarantiaExtendidaEntity garantiaEntity = obtenerGarantiaEntityPorCodigo(codigo);
 
 		return new GarantiaExtendida(ProductoBuilder.convertirADominio(garantiaEntity.getProducto()),
