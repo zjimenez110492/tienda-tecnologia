@@ -22,14 +22,15 @@ public class RepositorioProductoPersistente implements RepositorioProducto, Repo
 
 	@Override
 	public Producto obtenerPorCodigo(String codigo) {
-		
+		System.out.println("ENTRANDO ReposProdPersis-obtenerPorCodigo");
 		ProductoEntity productoEntity = obtenerProductoEntityPorCodigo(codigo);
 		return ProductoBuilder.convertirADominio(productoEntity);
 	}
 	
 	@Override
 	public ProductoEntity obtenerProductoEntityPorCodigo(String codigo) {
-		
+
+		System.out.println("ENTRANDO ReposProdPersis-obtenerProdEntityPorCodigo");
 		Query query = entityManager.createNamedQuery(PRODUCTO_FIND_BY_CODIGO);
 		query.setParameter(CODIGO, codigo);
 
