@@ -1,0 +1,49 @@
+package dominio;
+//
+import dominio.repositorio.RepositorioProducto;
+import dominio.repositorio.RepositorioGarantiaExtendida;
+
+public class Vendedor {
+
+    public static final String EL_PRODUCTO_TIENE_GARANTIA = "El producto ya cuenta con una garantia extendida";
+
+    private RepositorioProducto repositorioProducto;
+    private RepositorioGarantiaExtendida repositorioGarantia;
+
+    public Vendedor(RepositorioProducto repositorioProducto, RepositorioGarantiaExtendida repositorioGarantia) {
+        this.repositorioProducto = repositorioProducto;
+        this.repositorioGarantia = repositorioGarantia;
+
+    }
+/*Se debe mirar si el codigo tiene 3 vocales, si es asi no se genera garantia,
+ * Se debe consultar el codigo en el repositorio para obtener el producto,
+  teniendo el producto se debe generar la garantia JOIN producto
+  */  
+    public void generarGarantia(String codigo) {
+    	
+    	if(contarVocales(codigo)!=3)
+    	{
+    		Producto p=this.repositorioGarantia.obtenerProductoConGarantiaPorCodigo(codigo);
+    		System.out.println("************************"+p.toString());
+    	}
+    }
+
+    public boolean tieneGarantia(String codigo) {
+    	if(contarVocales(codigo)!=3)
+    	{
+    		Producto p=this.repositorioGarantia.obtenerProductoConGarantiaPorCodigo(codigo);
+    		System.out.println("************************"+p.toString());
+    	}
+    	return false;
+    }
+    public int contarVocales(String codigo)
+    {
+    	int contador=0;
+    	for(int i=0;i<codigo.length();i++) {
+    		  if ((codigo.charAt(i)=='a') || (codigo.charAt(i)=='e') || (codigo.charAt(i)=='i') || (codigo.charAt(i)=='o') || (codigo.charAt(i)=='u')){
+    		    contador++;
+    		  }
+    		}
+    	return contador;
+    }
+}

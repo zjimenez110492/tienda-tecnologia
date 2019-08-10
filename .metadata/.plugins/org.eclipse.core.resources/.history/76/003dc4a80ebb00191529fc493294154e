@@ -1,0 +1,31 @@
+package dominio;
+//
+import dominio.repositorio.RepositorioProducto;
+import dominio.repositorio.RepositorioGarantiaExtendida;
+
+public class Vendedor {
+
+    public static final String EL_PRODUCTO_TIENE_GARANTIA = "El producto ya cuenta con una garantia extendida";
+
+    private RepositorioProducto repositorioProducto;
+    private RepositorioGarantiaExtendida repositorioGarantia;
+
+    public Vendedor(RepositorioProducto repositorioProducto, RepositorioGarantiaExtendida repositorioGarantia) {
+        this.repositorioProducto = repositorioProducto;
+        this.repositorioGarantia = repositorioGarantia;
+
+    }
+
+    public void generarGarantia(String codigo) {
+    	Producto p = (Producto)repositorioGarantia.obtenerProductoConGarantiaPorCodigo(codigo);
+    	System.out.println("**************************IMPRIMIENDO PRODUCTO");
+    	System.out.println(p.toString());
+    	
+    	
+    }
+
+    public boolean tieneGarantia(String codigo) {
+        return false;
+    }
+
+}
