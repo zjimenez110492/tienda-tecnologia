@@ -39,7 +39,11 @@ public class RepositorioProductoPersistente implements RepositorioProducto, Repo
 
 	@Override
 	public void agregar(Producto producto) {
+		System.out.println("Nombre Producto: "+producto.getNombre()+"   Precio: "+producto.getPrecio());
+		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\nPRODUCTO AGREGADO CORRECTAMENTE- ESTOY EN AGREGAR\n\n\n\n\n\n\n\n");
+		
 		entityManager.persist(ProductoBuilder.convertirAEntity(producto));
+	
 	}	
 
 	

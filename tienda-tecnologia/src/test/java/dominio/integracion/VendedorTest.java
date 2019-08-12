@@ -43,7 +43,7 @@ public class VendedorTest {
 
 	@Test
 	public void generarGarantiaTest() {
-
+		System.out.println("\n\n\nentrando a metodo generarGarantiaTEST ");
 		// arrange
 		Producto producto = new ProductoTestDataBuilder().conNombre(COMPUTADOR_LENOVO).build();
 		repositorioProducto.agregar(producto);
@@ -53,9 +53,11 @@ public class VendedorTest {
 		vendedor.generarGarantia(producto.getCodigo());
 
 		// assert
+		System.out.println("TIENE GARANTIA?:  "+vendedor.tieneGarantia(producto.getCodigo()));
 		Assert.assertTrue(vendedor.tieneGarantia(producto.getCodigo()));
 		Assert.assertNotNull(repositorioGarantia.obtenerProductoConGarantiaPorCodigo(producto.getCodigo()));
 
+System.out.println("SALIENDO DE metodo generarGarantiaTEST \n\n\n");
 	}
 
 	@Test

@@ -30,27 +30,34 @@ public class Vendedor {
     	String nombreCliente;
     	GarantiaExtendida g= null;
     	Producto p=this.repositorioProducto.obtenerPorCodigo(codigo);
-    	System.out.println("********************* ENTRANDO AL METODO GENERAR GARANTIA");
-    	if(!tieneGarantia(codigo)&&p!=null)
+    	if(p!=null)
     	{
-    		System.out.println("\n\nEl producto "+p.getNombre()+" aun no posee una Garantia. \nDigite nombre de la persona que va a comprar la garantia");
-    		nombreCliente=sc.nextLine();
-    		g= new GarantiaExtendida(p, new Date(), calcularFechafin(p.getPrecio()), calcularGarantia(p.getPrecio()), nombreCliente);
-    		this.repositorioGarantia.agregar(g);
-    		System.out.println("$$$$$$$$$$$$$$$$$$$Garantía agregada: ");
-    		System.out.println("Nombre: "+g.getNombreCliente()+" Fecha Sol: "+g.getFechaSolicitudGarantia()+" FechaFin: "+g.getFechaFinGarantia()+" Precio Gar: "+g.getPrecioGarantia());
-    		System.out.println("Producto: "+g.getProducto().getNombre()+"    Precio: "+g.getProducto().getPrecio()+"\n\n\n");
-	
+    		if(!tieneGarantia(codigo))
+        	{
+        		System.out.println("\n\nEl producto "+p.getNombre()+" aun no posee una Garantia. \nDigite nombre de la persona que va a comprar la garantia");
+        		nombreCliente=sc.nextLine();
+        		g= new GarantiaExtendida(p, new Date(), calcularFechafin(p.getPrecio()), calcularGarantia(p.getPrecio()), nombreCliente);
+        		this.repositorioGarantia.agregar(g);
+        		System.out.println("$$$$$$$$$$$$$$$$$$$Garantía agregada: ");
+        		System.out.println("Nombre: "+g.getNombreCliente()+" Fecha Sol: "+g.getFechaSolicitudGarantia()+" FechaFin: "+g.getFechaFinGarantia()+" Precio Gar: "+g.getPrecioGarantia());
+        		System.out.println("Producto: "+g.getProducto().getNombre()+"    Precio: "+g.getProducto().getPrecio()+"\n\n\n");    	
+        	}
+        	else
+        	{	System.out.println("SI TIENE ");        		
+        		g=this.repositorioGarantia.obtener(codigo);    		
+        		System.out.println("Garantia: Nombre Cliente"+g.getNombreCliente()+" Precio Garantia:"+g.getPrecioGarantia()+"  Fecha Fin Garantia: "+g.getFechaFinGarantia()+"\n\n\n");
+        	}
+        
     	}
     	else
-    	{
-    		g=this.repositorioGarantia.obtener(codigo);
-    		System.out.println("\n\n\nLO SENTIMOS..!  El producto "+p.getNombre()+" ya posee una Garantía");
-    		System.out.println("Garantia: Nombre Cliente"+g.getNombreCliente()+" Precio Garantia:"+g.getPrecioGarantia()+"  Fecha Fin Garantia: "+g.getFechaFinGarantia()+"\n\n\n");
+    		System.out.println("El producto no existe en el repositorio, no puede generar una factura");
     	}
-    }
     //Calcula los dias que dura la garantia, a partir de la fecha actual y sin tener en cuenta los lunes
-private Date calcularFechafin(double precio) {
+    public void agregarProducto(Producto p)
+    {
+    	this.repositorioProducto.agregar(p);
+    }
+public Date calcularFechafin(double precio) {
 	
 	int numLunes=0, dias=calcularDias(precio);
 	double valorGarantia=calcularGarantia(precio);
@@ -76,7 +83,7 @@ private Date calcularFechafin(double precio) {
 	    return calendar.getTime(); 		
 	}
  }
-	private double calcularGarantia(double precio) {
+	public double calcularGarantia(double precio) {
 		return precio>5000? (precio*0.2):(precio*0.1);
 	}
 	private int calcularDias(double precio) {
@@ -98,24 +105,31 @@ private Date calcularFechafin(double precio) {
     	if(!comprobarVocales(codigo))
     	{
     		p=this.repositorioProducto.obtenerPorCodigo(codigo);
-    		g=this.repositorioGarantia.obtener(codigo);
-    		if(g!=null&&p!=null)
-    		{	//System.out.println("EL PRODUCTO SI XISTE, AUN NO SE COMPRUEBA QUE SI TIENE GARANTIA");
-    		//System.out.println("Datos del producto: Nombre: "+p.getNombre()+" Prcio:  "+p.getPrecio());
-    		//Compruebo que tenga garantia
+    		//g=this.repositorioGarantia.obtener(codigo);
+    		if(p!=null)
+    		{	
+    			//Compruebo que tenga garantia
     			nombre=p.getNombre();
-    			p=this.repositorioGarantia.obtenerProductoConGarantiaPorCodigo(codigo);
+    			p=this.repositorioGarantia.obtenerProductoConGarantiaPorCodigo(codigo); //este devuelve lo que diga mockito
+    			//AQUI ESTA EL PROBLEMA, EXTRAE EL PRODUCTO DE LA GARANTIA, PERO DICE QUE NO TIENE GARANTIA Y A LO MEJOR ES NULL, POR ESO SE PAUSA/
+    			//
     			if(p!=null)
-    				{tieneGarantia=true;}
-    			
+    				{
+    				g=this.repositorioGarantia.obtener(codigo);
+    				System.out.println("GARANTIA OBTENIDA:   "+g.getNombreCliente());
+    				if(g!=null && g.getNombreCliente()!=null)	
+    				{	tieneGarantia=true; System.out.println("\n\n\n\nESTOY DENTRO DE LA GARANTIA "+g.getNombreCliente());}
+    				}    			
     		}
+    		else
+    			System.out.println("P ES NULO..!");
     		
     	}
     	else
-    	{System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-    	System.out.println("$$$$$$$$$$$$$**********************$$$$$$$$$$$$$$$$$$$$$");
+    	{
     		System.out.println("FALTA MANDAR LA EXCEPCION DE QUE EL PRODUCTO TIENE 3 VOALES Y NO TIENE GARANTIA EXTENDIDA");
     	}
+    	System.out.println("FIN TIENEGRARANTIA");
     	return tieneGarantia;
     }
     //Si tiene 3 vocales, se debe generar una excepción con un mensaje

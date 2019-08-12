@@ -29,10 +29,11 @@ public class RepositorioGarantiaPersistente implements RepositorioGarantiaExtend
 
 	@Override
 	public void agregar(GarantiaExtendida garantia) {
-		System.out.println("Entrando a RepositorioGarantiaPersistente-agregar.    ");
+		System.out.println("\n\n\n\n$$$$$$$$$$$$$$%%%%%%%%%%%%%%%%%%%%%%%%%Entrando a RepositorioGarantiaPersistente-agregar.    ");
 		
 		GarantiaExtendidaEntity garantiaEntity = buildGarantiaExtendidaEntity(garantia);
 		entityManager.persist(garantiaEntity);
+		System.out.println("\n\n\n\n");
 		
 	}
 	

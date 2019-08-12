@@ -5,7 +5,6 @@ INDEX VERSION 1.130+C:\Users\JHONATAN\Desktop\examen-ingreso-tienda-tecnologia\.
 2648871779.index
 165794779.index
 3973945260.index
-1938583198.index
 1151569180.index
 364096953.index
 2845807539.index
